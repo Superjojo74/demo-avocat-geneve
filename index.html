@@ -150,10 +150,11 @@
         .hero-img img,
         .hero-img video {
             width: 100%;
-            height: 100%;
+            height: 120%;
             object-fit: cover;
             object-position: center 30%;
             filter: brightness(0.35) contrast(1.1);
+            will-change: transform;
         }
 
         .hero-img::after {
@@ -2356,23 +2357,36 @@
         document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
     }
 
-    // === COUNTER ANIMATION ===
+    // === COUNTER ANIMATION (Motion-powered) ===
     function animateCount(el) {
         const end = +el.dataset.count;
         const suffix = el.dataset.suffix || '';
-        let cur = 0;
-        const step = Math.max(1, end / 50);
-        const timer = setInterval(() => {
-            cur += step;
-            if (cur >= end) { el.textContent = end + suffix; clearInterval(timer); }
-            else { el.textContent = Math.floor(cur) + suffix; }
-        }, 25);
+        const duration = 2000;
+        const start = performance.now();
+        function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / duration, 1);
+            // Cubic ease-out for smooth deceleration
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(eased * end) + (progress >= 1 ? suffix : suffix);
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+
+        // Motion scale pop on completion
+        if (motionAnimate) {
+            motionAnimate(el, { scale: [1, 1.15, 1] }, { duration: 0.5, delay: 1.8, easing: [0.16, 1, 0.3, 1] });
+        }
     }
 
     const counterObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.querySelectorAll('[data-count]').forEach(animateCount);
+                const els = entry.target.querySelectorAll('[data-count]');
+                els.forEach((el, i) => {
+                    // Stagger each counter
+                    setTimeout(() => animateCount(el), i * 200);
+                });
                 counterObs.unobserve(entry.target);
             }
         });
@@ -2478,6 +2492,33 @@
             if (target) lenis.scrollTo(target, { offset: -40 });
         });
     });
+
+    // === HERO PARALLAX ===
+    (function() {
+        const heroMedia = document.querySelector('.hero-img video') || document.querySelector('.hero-img img');
+        const heroContent = document.querySelector('.hero-content');
+        if (!heroMedia) return;
+
+        let ticking = false;
+        function heroParallax() {
+            const scrollY = window.scrollY;
+            const heroH = window.innerHeight;
+            if (scrollY < heroH * 1.2) {
+                // Video/image moves slower = depth feeling
+                heroMedia.style.transform = 'translateY(' + (scrollY * 0.35) + 'px) scale(1.05)';
+                // Content fades and lifts as you scroll
+                const opacity = Math.max(0, 1 - scrollY / (heroH * 0.6));
+                const lift = scrollY * 0.15;
+                heroContent.style.opacity = opacity;
+                heroContent.style.transform = 'translateY(-' + lift + 'px)';
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) { requestAnimationFrame(heroParallax); ticking = true; }
+        }, { passive: true });
+    })();
     </script>
 </body>
 </html>
