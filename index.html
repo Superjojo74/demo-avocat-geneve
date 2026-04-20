@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/motion@12/dist/motion.js"></script>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -426,69 +427,123 @@
         .section-header { margin-bottom: 80px; }
 
         /* ===== IMAGE PARALLAX BAND ===== */
-        .parallax-band {
+        /* ===== TYPEWRITER QUOTE SECTION ===== */
+        .typewriter-section {
             position: relative;
-            height: 50vh;
+            padding: clamp(6rem, 14vw, 12rem) 0;
+            background: var(--primary);
             overflow: hidden;
         }
 
-        .parallax-band img {
-            position: absolute;
-            top: -20%;
-            left: 0;
-            width: 100%;
-            height: 140%;
-            object-fit: cover;
-            will-change: transform;
-        }
-
-        .parallax-band::after {
+        .typewriter-section::before {
             content: '';
             position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(10,10,10,0.15) 0%, rgba(10,10,10,0.35) 50%, rgba(10,10,10,0.15) 100%);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to bottom, transparent, var(--gold));
         }
 
-        .parallax-band-overlay {
+        .typewriter-section::after {
+            content: '';
             position: absolute;
-            inset: 0;
-            z-index: 2;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80px;
+            background: linear-gradient(to top, transparent, rgba(201,168,76,0.3));
+        }
+
+        .typewriter-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 48px;
+            position: relative;
+        }
+
+        .typewriter-label {
+            font-family: var(--body);
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 3rem;
+            opacity: 0;
+        }
+
+        .typewriter-text {
+            font-family: var(--heading);
+            font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+            font-weight: 300;
+            font-style: italic;
+            color: var(--white);
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            min-height: 3.5em;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .parallax-band-text {
-            font-family: var(--heading);
-            font-size: clamp(2rem, 4vw, 4rem);
-            font-weight: 300;
-            font-style: italic;
-            color: var(--white);
-            text-align: center;
-            max-width: 750px;
-            line-height: 1.35;
-            padding: 48px 40px;
-            position: relative;
+        .typewriter-text .tw-char {
+            display: inline-block;
+            opacity: 0;
         }
 
-        .parallax-band-text::before {
-            content: '';
+        .typewriter-text .tw-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--gold);
+            margin-left: 4px;
+            vertical-align: text-bottom;
+            animation: twBlink 0.9s ease-in-out infinite;
+        }
+
+        @keyframes twBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .typewriter-line {
+            width: 60px;
+            height: 1px;
+            background: var(--gold);
+            margin: 2.5rem auto 0;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: center;
+        }
+
+        .typewriter-decorations {
             position: absolute;
             inset: 0;
-            background: rgba(10, 10, 10, 0.45);
-            border: 1px solid rgba(201, 168, 76, 0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            pointer-events: none;
         }
 
-        .parallax-band-text span {
-            position: relative;
-            z-index: 1;
-            background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .tw-corner {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-color: rgba(201,168,76,0.2);
+            border-style: solid;
+            border-width: 0;
+            opacity: 0;
+        }
+
+        .tw-corner-tl { top: -20px; left: 0; border-top-width: 1px; border-left-width: 1px; }
+        .tw-corner-tr { top: -20px; right: 0; border-top-width: 1px; border-right-width: 1px; }
+        .tw-corner-bl { bottom: -20px; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+        .tw-corner-br { bottom: -20px; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+
+        @media (max-width: 768px) {
+            .typewriter-inner { padding: 0 24px; }
+            .tw-corner { display: none; }
         }
 
         /* ===== EXPERTISE BENTO ===== */
@@ -1763,15 +1818,20 @@
         </div>
     </section>
 
-    <!-- PARALLAX IMAGE -->
-    <div class="parallax-band" id="parallaxBand">
-        <img src="https://images.unsplash.com/photo-1504711331083-9c895941bf81?w=1920&q=80" alt="Genève, vue sur le lac Léman" loading="lazy" id="parallaxImg">
-        <div class="parallax-band-overlay">
-            <p class="parallax-band-text reveal">
-                <span>&laquo; Une procédure judiciaire est souvent éprouvante. Nous sommes là pour vous accompagner. &raquo;</span>
-            </p>
+    <!-- TYPEWRITER QUOTE -->
+    <section class="typewriter-section" id="typewriterSection">
+        <div class="typewriter-inner">
+            <div class="typewriter-decorations">
+                <div class="tw-corner tw-corner-tl"></div>
+                <div class="tw-corner tw-corner-tr"></div>
+                <div class="tw-corner tw-corner-bl"></div>
+                <div class="tw-corner tw-corner-br"></div>
+            </div>
+            <div class="typewriter-label">Notre engagement</div>
+            <div class="typewriter-text" id="typewriterText" aria-label="Une procédure judiciaire est souvent éprouvante. Nous sommes là pour vous accompagner."></div>
+            <div class="typewriter-line"></div>
         </div>
-    </div>
+    </section>
 
     <!-- APPROACH -->
     <section class="section about-dark" id="approche">
@@ -2273,13 +2333,28 @@
     document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
     document.querySelectorAll('.nav-links a').forEach(a => a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open')));
 
-    // === SCROLL REVEAL ===
-    const revealObs = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObs.unobserve(entry.target); }
+    // === SCROLL REVEAL (Motion-enhanced) ===
+    const { animate: motionAnimate, inView: motionInView } = window.Motion || {};
+    if (motionAnimate && motionInView) {
+        document.querySelectorAll('.reveal').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            motionInView(el, () => {
+                const delay = el.classList.contains('reveal-delay-1') ? 0.1
+                    : el.classList.contains('reveal-delay-2') ? 0.2
+                    : el.classList.contains('reveal-delay-3') ? 0.3 : 0;
+                motionAnimate(el, { opacity: [0, 1], transform: ['translateY(30px)', 'translateY(0px)'] },
+                    { duration: 0.8, delay, easing: [0.16, 1, 0.3, 1] });
+            }, { amount: 0.1, margin: '0px 0px -60px 0px' });
         });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    } else {
+        const revealObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObs.unobserve(entry.target); }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+        document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    }
 
     // === COUNTER ANIMATION ===
     function animateCount(el) {
@@ -2304,23 +2379,74 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.hero-stats, .counters-grid').forEach(el => counterObs.observe(el));
 
-    // === PARALLAX ===
-    function parallax() {
-        const bands = [
-            { img: document.getElementById('parallaxImg'), band: document.getElementById('parallaxBand') },
-            { img: document.getElementById('parallaxImg2'), band: document.getElementById('parallaxBand2') }
+    // === TYPEWRITER + MOTION ANIMATIONS ===
+    (function() {
+        const { animate, inView, stagger } = window.Motion || {};
+        if (!animate) return;
+
+        const section = document.getElementById('typewriterSection');
+        if (!section) return;
+
+        const phrases = [
+            'Une procédure judiciaire est souvent éprouvante.',
+            'Nous sommes là pour vous accompagner.',
+            'Votre droit, notre combat.',
+            'Chaque situation mérite une écoute attentive.'
         ];
-        bands.forEach(({ img, band }) => {
-            if (!img || !band) return;
-            const rect = band.getBoundingClientRect();
-            if (rect.bottom > 0 && rect.top < window.innerHeight) {
-                const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                img.style.transform = `translateY(${(progress - 0.5) * -80}px)`;
+
+        const label = section.querySelector('.typewriter-label');
+        const textEl = document.getElementById('typewriterText');
+        const line = section.querySelector('.typewriter-line');
+        const corners = section.querySelectorAll('.tw-corner');
+
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let hasStarted = false;
+
+        function typewrite() {
+            const current = phrases[phraseIndex];
+            if (!isDeleting) {
+                charIndex++;
+                if (charIndex > current.length) {
+                    setTimeout(() => { isDeleting = true; typewrite(); }, 2500);
+                    return;
+                }
+            } else {
+                charIndex--;
+                if (charIndex < 0) {
+                    charIndex = 0;
+                    isDeleting = false;
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    setTimeout(typewrite, 400);
+                    return;
+                }
             }
-        });
-        requestAnimationFrame(parallax);
-    }
-    parallax();
+
+            const displayed = current.substring(0, charIndex);
+            textEl.innerHTML = '<span style="position:relative;z-index:1">' + displayed + '</span><span class="tw-cursor"></span>';
+
+            const speed = isDeleting ? 30 : 55;
+            setTimeout(typewrite, speed);
+        }
+
+        inView(section, () => {
+            if (hasStarted) return;
+            hasStarted = true;
+
+            // Animate label
+            animate(label, { opacity: [0, 1], y: [20, 0] }, { duration: 0.7, easing: [0.16, 1, 0.3, 1] });
+
+            // Animate corners
+            animate(corners, { opacity: [0, 1] }, { duration: 0.6, delay: stagger(0.1, { start: 0.3 }), easing: 'ease-out' });
+
+            // Animate line
+            animate(line, { opacity: [0, 1], scaleX: [0, 1] }, { duration: 0.8, delay: 0.5, easing: [0.16, 1, 0.3, 1] });
+
+            // Start typewriter after a short delay
+            setTimeout(typewrite, 600);
+        }, { amount: 0.4 });
+    })();
 
     // === FAQ ACCORDION ===
     document.querySelectorAll('.faq-question').forEach(btn => {
