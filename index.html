@@ -645,7 +645,7 @@
 
         .exp-card:hover .exp-card-line { transform: scaleX(1); }
 
-        /* ===== ABOUT DARK ===== */
+        /* ===== SLIDESHOW — APPROACH ===== */
         .about-dark {
             background: var(--primary);
             color: var(--white);
@@ -667,77 +667,156 @@
         .about-dark .section-title { color: var(--white); }
         .about-dark .section-sub { color: rgba(255,255,255,0.5); }
 
-        .about-grid {
+        .slideshow-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 100px;
-            align-items: center;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 80px;
+            align-items: start;
         }
 
-        .about-image {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            aspect-ratio: 3/4;
+        /* Left: title list */
+        .slideshow-titles {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding-top: 20px;
         }
 
-        .about-image img {
+        .slideshow-title-btn {
+            display: block;
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: left;
+            background: none;
+            border: none;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            position: relative;
+            transition: padding-left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .about-image:hover img { transform: scale(1.05); }
+        .slideshow-title-btn:first-child { border-top: 1px solid rgba(255,255,255,0.06); }
 
-        .about-image::after {
+        .slideshow-title-text {
+            font-family: var(--heading);
+            font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+            font-weight: 300;
+            color: rgba(255,255,255,0.25);
+            line-height: 1.2;
+            transition: color 0.4s;
+            display: inline-block;
+        }
+
+        .slideshow-title-btn:hover .slideshow-title-text { color: rgba(255,255,255,0.6); }
+
+        .slideshow-title-btn.active { padding-left: 20px; }
+
+        .slideshow-title-btn.active .slideshow-title-text { color: var(--gold); }
+
+        .slideshow-title-btn.active::before {
             content: '';
             position: absolute;
-            inset: 0;
-            border: 1px solid rgba(201,168,76,0.2);
-            border-radius: 20px;
-            pointer-events: none;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 60%;
+            background: var(--gold);
+            border-radius: 2px;
         }
 
-        .about-features { display: flex; flex-direction: column; gap: 40px; margin-top: 48px; }
+        /* Right: content panels */
+        .slideshow-panels {
+            position: relative;
+            min-height: 340px;
+        }
 
-        .about-feat {
+        .slideshow-panel {
+            display: none;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .slideshow-panel.active { display: flex; }
+
+        .slideshow-panel-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.68rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            background: rgba(201,168,76,0.1);
+            padding: 6px 16px;
+            border-radius: 100px;
+            width: fit-content;
+        }
+
+        .slideshow-panel-desc {
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.85;
+            max-width: 480px;
+        }
+
+        .slideshow-panel-features {
             display: flex;
-            gap: 20px;
-            align-items: flex-start;
-            padding: 24px;
-            border-radius: 16px;
-            transition: background 0.3s;
-            cursor: none;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 8px;
         }
 
-        .about-feat:hover { background: rgba(255,255,255,0.04); }
-
-        .about-feat-icon {
-            flex-shrink: 0;
-            width: 48px;
-            height: 48px;
+        .slideshow-feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
             border-radius: 12px;
-            border: 1px solid rgba(201,168,76,0.2);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .slideshow-feature:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(201,168,76,0.2);
+        }
+
+        .slideshow-feature-icon {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(201,168,76,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .about-feat-icon svg { width: 20px; height: 20px; color: var(--gold); }
-
-        .about-feat h4 {
-            font-family: var(--heading);
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 6px;
+        .slideshow-feature-icon svg {
+            width: 16px;
+            height: 16px;
+            color: var(--gold);
         }
 
-        .about-feat p {
+        .slideshow-feature span {
             font-size: 0.88rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.7;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+        }
+
+        @media (max-width: 1024px) {
+            .slideshow-grid { grid-template-columns: 1fr; gap: 48px; }
+        }
+
+        @media (max-width: 768px) {
+            .slideshow-title-text { font-size: 1.4rem; }
+            .slideshow-title-btn { padding: 18px 0; }
+            .slideshow-title-btn.active { padding-left: 16px; }
+            .slideshow-panels { min-height: auto; }
         }
 
         /* ===== TEAM ===== */
@@ -918,242 +997,151 @@
             background: var(--border);
         }
 
-        /* ===== PROBLEM — RADIAL ORBITAL ===== */
+        /* ===== PROBLEM — TABS ===== */
         .problem {
-            background: var(--primary);
+            background: var(--cream);
             position: relative;
             overflow: hidden;
-            padding: clamp(5rem, 12vw, 10rem) 0;
-        }
-
-        .problem::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
-            pointer-events: none;
+            padding: clamp(5rem, 10vw, 8rem) 0;
         }
 
         .problem-header {
             text-align: center;
-            margin-bottom: clamp(3rem, 6vw, 5rem);
+            margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
             position: relative;
             z-index: 2;
         }
 
-        .problem-header .section-label { color: var(--gold); }
+        .problem-header .section-label { color: var(--gold); justify-content: center; }
+        .problem-header .section-title { color: var(--text); }
+        .problem-header .section-sub { color: var(--text-muted); max-width: 550px; margin: 0 auto; }
 
-        .problem-header .section-title {
-            color: var(--white);
-        }
-
-        .problem-header .section-sub {
-            color: rgba(255,255,255,0.55);
-            max-width: 550px;
-            margin: 0 auto;
-        }
-
-        /* Orbital container */
-        .orbital-wrap {
+        /* Tabs navigation */
+        .problem-tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 0;
             position: relative;
-            width: 100%;
-            max-width: 700px;
-            aspect-ratio: 1;
-            margin: 0 auto;
-            z-index: 2;
+            border-bottom: 1px solid var(--border);
+            max-width: 720px;
+            margin: 0 auto 48px;
         }
 
-        /* Concentric rings */
-        .orbital-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(201,168,76,0.08);
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-        }
-        .orbital-ring-1 { width: 40%; height: 40%; }
-        .orbital-ring-2 { width: 65%; height: 65%; border-style: dashed; border-color: rgba(201,168,76,0.06); }
-        .orbital-ring-3 { width: 90%; height: 90%; }
-
-        /* Central hub */
-        .orbital-hub {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px; height: 120px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,168,76,0.25) 0%, rgba(201,168,76,0.05) 60%, transparent 100%);
+        .problem-tab-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 5;
-        }
-
-        .orbital-hub-inner {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle, var(--gold) 0%, rgba(201,168,76,0.6) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1);
-        }
-
-        .orbital-hub-inner svg { width: 32px; height: 32px; stroke: var(--primary); stroke-width: 1.5; }
-
-        .orbital-hub-ping {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            border: 1px solid var(--gold);
-            animation: orbitalPing 3s ease-out infinite;
-            opacity: 0;
-        }
-        .orbital-hub-ping:nth-child(2) { animation-delay: 1s; }
-        .orbital-hub-ping:nth-child(3) { animation-delay: 2s; }
-
-        @keyframes orbitalPing {
-            0% { width: 80px; height: 80px; opacity: 0.6; }
-            100% { width: 200px; height: 200px; opacity: 0; }
-        }
-
-        /* Orbital nodes */
-        .orbital-node {
-            position: absolute;
-            z-index: 4;
-            cursor: pointer;
-        }
-
-        .orbital-node-dot {
-            width: 56px; height: 56px;
-            border-radius: 50%;
-            background: rgba(201,168,76,0.1);
-            border: 1px solid rgba(201,168,76,0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        .orbital-node-dot svg { width: 20px; height: 20px; stroke: var(--gold); stroke-width: 1.5; }
-
-        .orbital-node:hover .orbital-node-dot,
-        .orbital-node.active .orbital-node-dot {
-            background: var(--gold);
-            border-color: var(--gold);
-            transform: scale(1.15);
-            box-shadow: 0 0 30px rgba(201,168,76,0.4);
-        }
-
-        .orbital-node:hover .orbital-node-dot svg,
-        .orbital-node.active .orbital-node-dot svg {
-            stroke: var(--primary);
-        }
-
-        /* Node label */
-        .orbital-node-label {
-            position: absolute;
-            white-space: nowrap;
+            gap: 10px;
+            padding: 16px 28px;
+            background: none;
+            border: none;
             font-family: var(--body);
-            font-size: 0.8rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.7);
-            transition: color 0.3s ease;
-            pointer-events: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s;
+            white-space: nowrap;
         }
 
-        .orbital-node:hover .orbital-node-label,
-        .orbital-node.active .orbital-node-label { color: var(--white); }
+        .problem-tab-btn svg {
+            width: 18px;
+            height: 18px;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+            transition: color 0.3s;
+        }
 
-        /* Positions — top, right, bottom, left */
-        .orbital-node-0 { top: 3%; left: 50%; transform: translateX(-50%); }
-        .orbital-node-0 .orbital-node-label { top: -28px; left: 50%; transform: translateX(-50%); }
+        .problem-tab-btn:hover { color: var(--text); }
+        .problem-tab-btn:hover svg { color: var(--gold); }
 
-        .orbital-node-1 { top: 50%; right: 3%; transform: translateY(-50%); }
-        .orbital-node-1 .orbital-node-label { left: calc(100% + 14px); top: 50%; transform: translateY(-50%); }
+        .problem-tab-btn.active {
+            color: var(--text);
+        }
 
-        .orbital-node-2 { bottom: 3%; left: 50%; transform: translateX(-50%); }
-        .orbital-node-2 .orbital-node-label { bottom: -28px; left: 50%; transform: translateX(-50%); }
+        .problem-tab-btn.active svg { color: var(--gold); }
 
-        .orbital-node-3 { top: 50%; left: 3%; transform: translateY(-50%); }
-        .orbital-node-3 .orbital-node-label { right: calc(100% + 14px); top: 50%; transform: translateY(-50%); }
-
-        /* Connector lines (hub to nodes) */
-        .orbital-line {
+        .problem-tab-indicator {
             position: absolute;
-            top: 50%; left: 50%;
-            height: 1px;
-            background: linear-gradient(to right, rgba(201,168,76,0.3), rgba(201,168,76,0.05));
-            transform-origin: left center;
-            z-index: 1;
-        }
-        .orbital-line-0 { width: 42%; transform: rotate(-90deg); }
-        .orbital-line-1 { width: 42%; transform: rotate(0deg); }
-        .orbital-line-2 { width: 42%; transform: rotate(90deg); }
-        .orbital-line-3 { width: 42%; transform: rotate(180deg); }
-
-        /* Detail card (appears on click/hover) */
-        .orbital-detail {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 320px;
-            background: rgba(10,10,10,0.85);
-            border: 1px solid rgba(201,168,76,0.15);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 2rem;
-            z-index: 10;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: 4px;
+            bottom: -1px;
+            height: 2px;
+            background: var(--gold);
+            transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .orbital-detail.visible {
-            opacity: 1;
-            pointer-events: auto;
+        /* Tabs content */
+        .problem-tabs-content {
+            position: relative;
+            max-width: 960px;
+            margin: 0 auto;
+            min-height: 280px;
         }
 
-        .orbital-detail-title {
+        .problem-tab-panel {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+
+        .problem-tab-panel.active { display: grid; }
+
+        .problem-tab-text h3 {
             font-family: var(--heading);
-            font-size: 1.4rem;
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
             font-weight: 400;
-            color: var(--white);
-            margin-bottom: 0.75rem;
+            color: var(--text);
+            margin-bottom: 16px;
+            line-height: 1.2;
         }
 
-        .orbital-detail-text {
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.6);
-            line-height: 1.7;
+        .problem-tab-text p {
+            font-size: 0.95rem;
             font-weight: 300;
-            margin-bottom: 1.25rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
         }
 
-        .orbital-detail-cta {
+        .problem-tab-cta {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.72rem;
+            font-size: 0.78rem;
             font-weight: 500;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
+            letter-spacing: 0.08em;
             color: var(--gold);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: gap 0.3s, color 0.3s;
         }
-        .orbital-detail-cta:hover { color: var(--gold-light); }
-        .orbital-detail-cta svg { width: 14px; height: 14px; }
+
+        .problem-tab-cta:hover { gap: 14px; color: var(--gold-light); }
+        .problem-tab-cta svg { width: 16px; height: 16px; }
+
+        .problem-tab-illustration {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 48px;
+            aspect-ratio: 4/3;
+        }
+
+        .problem-tab-illustration svg {
+            width: 100%;
+            max-width: 180px;
+            height: auto;
+            color: var(--gold);
+            opacity: 0.7;
+        }
 
         /* Bottom CTA */
         .problem-bottom {
             text-align: center;
-            margin-top: clamp(3rem, 6vw, 4rem);
+            margin-top: clamp(3rem, 5vw, 4rem);
             position: relative;
             z-index: 2;
         }
@@ -1163,7 +1151,7 @@
             font-size: clamp(1.3rem, 2.5vw, 1.8rem);
             font-weight: 300;
             font-style: italic;
-            color: rgba(255,255,255,0.7);
+            color: var(--text-muted);
             margin-bottom: 2rem;
             max-width: 550px;
             margin-left: auto;
@@ -1174,13 +1162,12 @@
         .problem-bottom p em { color: var(--gold); font-weight: 400; }
 
         @media (max-width: 768px) {
-            .orbital-wrap { max-width: 360px; }
-            .orbital-node-dot { width: 44px; height: 44px; }
-            .orbital-node-dot svg { width: 16px; height: 16px; }
-            .orbital-node-label { font-size: 0.7rem; }
-            .orbital-hub-inner { width: 60px; height: 60px; }
-            .orbital-hub-inner svg { width: 24px; height: 24px; }
-            .orbital-detail { width: 260px; padding: 1.5rem; }
+            .problem-tabs-nav { flex-wrap: wrap; gap: 0; justify-content: center; }
+            .problem-tab-btn { padding: 12px 16px; font-size: 0.75rem; }
+            .problem-tab-btn svg { width: 16px; height: 16px; }
+            .problem-tab-panel { grid-template-columns: 1fr; gap: 32px; }
+            .problem-tab-illustration { aspect-ratio: 3/2; padding: 32px; }
+            .problem-tab-indicator { display: none; }
         }
 
         /* ===== PROCESS STEPS ===== */
@@ -1715,14 +1702,13 @@
         @media (max-width: 1024px) {
             .hero-content { grid-template-columns: 1fr; gap: 48px; }
             .hero-stats { flex-direction: row; gap: 40px; }
-            .about-grid { grid-template-columns: 1fr; gap: 48px; }
+            .slideshow-grid { grid-template-columns: 1fr; gap: 48px; }
             .expertise-bento { grid-template-columns: repeat(2, 1fr); grid-template-rows: auto; }
             .expertise-bento .exp-card:nth-child(1),
             .expertise-bento .exp-card:nth-child(4) { grid-column: auto; }
             .counters-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
             .contact-grid { grid-template-columns: 1fr; }
             .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-            .orbital-wrap { max-width: 500px; }
             .process-grid { grid-template-columns: repeat(3, 1fr); }
             .testimonials-grid { grid-template-columns: 1fr 1fr; }
         }
@@ -1882,74 +1868,130 @@
         </div>
     </div>
 
-    <!-- PROBLEM AGITATION — RADIAL ORBITAL -->
-    <section class="problem" id="problemSection">
+    <!-- PROBLEM AGITATION — TABS -->
+    <section class="problem section" id="problemSection">
         <div class="container">
             <div class="problem-header">
-                <div class="section-label reveal">Vous vivez cette situation ?</div>
+                <div class="section-label reveal" style="justify-content:center;">Vous vivez cette situation ?</div>
                 <h2 class="section-title reveal reveal-delay-1">Quand un problème juridique survient, <em>tout bascule</em></h2>
-                <p class="section-sub reveal reveal-delay-2">Cliquez sur une situation pour en savoir plus.</p>
             </div>
 
-            <div class="orbital-wrap" id="orbitalWrap">
-                <!-- Concentric rings -->
-                <div class="orbital-ring orbital-ring-1"></div>
-                <div class="orbital-ring orbital-ring-2"></div>
-                <div class="orbital-ring orbital-ring-3"></div>
+            <div class="problem-tabs-nav reveal" id="problemTabsNav">
+                <button class="problem-tab-btn active" data-tab="0" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="23" y1="11" y2="11"/></svg>
+                    Divorce
+                </button>
+                <button class="problem-tab-btn" data-tab="1" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                    Licenciement
+                </button>
+                <button class="problem-tab-btn" data-tab="2" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg>
+                    Litige immobilier
+                </button>
+                <button class="problem-tab-btn" data-tab="3" type="button">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    Courrier officiel
+                </button>
+                <div class="problem-tab-indicator" id="problemTabIndicator"></div>
+            </div>
 
-                <!-- Connector lines -->
-                <div class="orbital-line orbital-line-0"></div>
-                <div class="orbital-line orbital-line-1"></div>
-                <div class="orbital-line orbital-line-2"></div>
-                <div class="orbital-line orbital-line-3"></div>
-
-                <!-- Central hub -->
-                <div class="orbital-hub">
-                    <div class="orbital-hub-ping"></div>
-                    <div class="orbital-hub-ping"></div>
-                    <div class="orbital-hub-ping"></div>
-                    <div class="orbital-hub-inner">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="problem-tabs-content" id="problemTabsContent">
+                <!-- Panel 0: Divorce -->
+                <div class="problem-tab-panel active" data-panel="0">
+                    <div class="problem-tab-text">
+                        <h3>Un divorce inattendu</h3>
+                        <p>Garde des enfants, pension alimentaire, partage des biens. Chaque décision compte. Nous vous accompagnons pour protéger vos droits et ceux de vos enfants.</p>
+                        <a href="#contact" class="problem-tab-cta">
+                            Nous contacter
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
+                    </div>
+                    <div class="problem-tab-illustration">
+                        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="40" cy="40" r="16" opacity="0.5"/>
+                            <circle cx="80" cy="40" r="16" opacity="0.5"/>
+                            <path d="M40 60v24M80 60v24" opacity="0.4"/>
+                            <path d="M28 90h24M68 90h24" opacity="0.3"/>
+                            <line x1="52" y1="40" x2="68" y2="40" stroke-dasharray="4 4" opacity="0.3"/>
+                            <path d="M60 28l-4-8M60 28l4-8" opacity="0.4"/>
+                            <circle cx="60" cy="100" r="8" opacity="0.2"/>
+                            <path d="M56 100h8" opacity="0.3"/>
+                        </svg>
                     </div>
                 </div>
 
-                <!-- Nodes -->
-                <div class="orbital-node orbital-node-0" data-index="0">
-                    <div class="orbital-node-dot">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" x2="23" y1="11" y2="11"/></svg>
+                <!-- Panel 1: Licenciement -->
+                <div class="problem-tab-panel" data-panel="1">
+                    <div class="problem-tab-text">
+                        <h3>Un licenciement brutal</h3>
+                        <p>Licenciement abusif, heures supplémentaires impayées, harcèlement. En droit suisse, vous avez des recours. Agissez vite, les délais sont courts.</p>
+                        <a href="#contact" class="problem-tab-cta">
+                            Nous contacter
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <span class="orbital-node-label">Divorce</span>
+                    <div class="problem-tab-illustration">
+                        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="20" y="20" width="80" height="56" rx="4" opacity="0.4"/>
+                            <line x1="20" y1="36" x2="100" y2="36" opacity="0.3"/>
+                            <rect x="28" y="44" width="32" height="4" rx="2" opacity="0.2"/>
+                            <rect x="28" y="54" width="48" height="4" rx="2" opacity="0.15"/>
+                            <rect x="28" y="64" width="20" height="4" rx="2" opacity="0.1"/>
+                            <path d="M70 85l10 10M80 85l-10 10" opacity="0.5" stroke-width="2"/>
+                            <circle cx="75" cy="90" r="16" opacity="0.2"/>
+                            <path d="M40 100h40" stroke-dasharray="6 4" opacity="0.2"/>
+                        </svg>
+                    </div>
                 </div>
 
-                <div class="orbital-node orbital-node-1" data-index="1">
-                    <div class="orbital-node-dot">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+                <!-- Panel 2: Litige immobilier -->
+                <div class="problem-tab-panel" data-panel="2">
+                    <div class="problem-tab-text">
+                        <h3>Un litige qui menace votre logement</h3>
+                        <p>Résiliation de bail, loyer abusif, travaux non conformes. Notre connaissance du marché genevois est votre meilleur atout.</p>
+                        <a href="#contact" class="problem-tab-cta">
+                            Nous contacter
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <span class="orbital-node-label">Licenciement</span>
+                    <div class="problem-tab-illustration">
+                        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 100h80" opacity="0.3"/>
+                            <path d="M30 100V55l30-20 30 20v45" opacity="0.4"/>
+                            <rect x="48" y="72" width="24" height="28" opacity="0.3"/>
+                            <rect x="38" y="60" width="12" height="10" opacity="0.2"/>
+                            <rect x="70" y="60" width="12" height="10" opacity="0.2"/>
+                            <path d="M60 35l-38 25M60 35l38 25" opacity="0.3"/>
+                            <circle cx="60" cy="30" r="4" opacity="0.3"/>
+                            <path d="M15 108h90" stroke-dasharray="4 4" opacity="0.15"/>
+                        </svg>
+                    </div>
                 </div>
 
-                <div class="orbital-node orbital-node-2" data-index="2">
-                    <div class="orbital-node-dot">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M2 20h20"/><path d="M5 20V8l7-4 7 4v12"/></svg>
+                <!-- Panel 3: Courrier officiel -->
+                <div class="problem-tab-panel" data-panel="3">
+                    <div class="problem-tab-text">
+                        <h3>Un courrier des autorités</h3>
+                        <p>Mise en demeure, contrôle fiscal, procédure administrative. Ne restez pas seul face à l'administration.</p>
+                        <a href="#contact" class="problem-tab-cta">
+                            Nous contacter
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                        </a>
                     </div>
-                    <span class="orbital-node-label">Litige immobilier</span>
-                </div>
-
-                <div class="orbital-node orbital-node-3" data-index="3">
-                    <div class="orbital-node-dot">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <div class="problem-tab-illustration">
+                        <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="28" y="14" width="64" height="86" rx="4" opacity="0.4"/>
+                            <path d="M76 14v20h16" opacity="0.3"/>
+                            <rect x="38" y="44" width="44" height="4" rx="2" opacity="0.2"/>
+                            <rect x="38" y="56" width="36" height="4" rx="2" opacity="0.15"/>
+                            <rect x="38" y="68" width="44" height="4" rx="2" opacity="0.2"/>
+                            <rect x="38" y="80" width="20" height="4" rx="2" opacity="0.1"/>
+                            <circle cx="88" cy="88" r="18" opacity="0.25" fill="none"/>
+                            <path d="M82 88h12M88 82v12" opacity="0.4" stroke-width="1.5"/>
+                            <path d="M38 30h24" opacity="0.3" stroke-width="1.5"/>
+                        </svg>
                     </div>
-                    <span class="orbital-node-label">Courrier officiel</span>
-                </div>
-
-                <!-- Detail card -->
-                <div class="orbital-detail" id="orbitalDetail">
-                    <h4 class="orbital-detail-title" id="orbDetailTitle"></h4>
-                    <p class="orbital-detail-text" id="orbDetailText"></p>
-                    <a href="#contact" class="orbital-detail-cta">
-                        Nous contacter
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                    </a>
                 </div>
             </div>
 
@@ -2046,45 +2088,132 @@
         </div>
     </section>
 
-    <!-- APPROACH -->
+    <!-- APPROACH — SLIDESHOW -->
     <section class="section about-dark" id="approche">
         <div class="container">
-            <div class="about-grid">
-                <div class="about-image reveal">
-                    <img src="https://images.unsplash.com/photo-1575505586569-646b2ca898fc?w=800&q=80" alt="Palais de justice, colonnes et architecture classique" loading="lazy">
+            <div class="reveal">
+                <div class="section-label">Notre philosophie</div>
+                <h2 class="section-title">Un accompagnement<br><em>à votre mesure</em></h2>
+                <p class="section-sub" style="margin-bottom:60px;">Ce qui fait la différence quand vous nous confiez votre dossier.</p>
+            </div>
+
+            <div class="slideshow-grid" id="slideshowSection">
+                <div class="slideshow-titles">
+                    <button class="slideshow-title-btn active" data-slide="0" type="button">
+                        <span class="slideshow-title-text">Interlocuteur unique</span>
+                    </button>
+                    <button class="slideshow-title-btn" data-slide="1" type="button">
+                        <span class="slideshow-title-text">Solutions amiables</span>
+                    </button>
+                    <button class="slideshow-title-btn" data-slide="2" type="button">
+                        <span class="slideshow-title-text">Honoraires transparents</span>
+                    </button>
+                    <button class="slideshow-title-btn" data-slide="3" type="button">
+                        <span class="slideshow-title-text">Réactivité</span>
+                    </button>
                 </div>
-                <div>
-                    <div class="reveal">
-                        <div class="section-label">Notre philosophie</div>
-                        <h2 class="section-title">Un accompagnement<br><em>à votre mesure</em></h2>
-                        <p class="section-sub">Chaque dossier est traité directement par un avocat associé. Pas d'intermédiaire : un interlocuteur unique du début à la fin.</p>
+
+                <div class="slideshow-panels">
+                    <!-- Panel 0 -->
+                    <div class="slideshow-panel active" data-slide-panel="0">
+                        <div class="slideshow-panel-badge">Notre engagement</div>
+                        <p class="slideshow-panel-desc">Votre dossier est traité directement par un avocat associé. Pas d'intermédiaire : une relation de confiance du début à la fin.</p>
+                        <div class="slideshow-panel-features">
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                </div>
+                                <span>Suivi personnalisé</span>
+                            </div>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <span>Disponibilité directe</span>
+                            </div>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                </div>
+                                <span>Confidentialité absolue</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="about-features">
-                        <div class="about-feat reveal reveal-delay-1">
-                            <div class="about-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+
+                    <!-- Panel 1 -->
+                    <div class="slideshow-panel" data-slide-panel="1">
+                        <div class="slideshow-panel-badge">Notre méthode</div>
+                        <p class="slideshow-panel-desc">Nous privilégions la résolution amiable de vos litiges. Quand la négociation échoue, nous défendons vos intérêts avec détermination devant les tribunaux.</p>
+                        <div class="slideshow-panel-features">
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                                </div>
+                                <span>Médiation</span>
                             </div>
-                            <div>
-                                <h4>Interlocuteur unique</h4>
-                                <p>Un avocat associé vous accompagne personnellement sur toute la durée de votre affaire.</p>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                                </div>
+                                <span>Négociation</span>
+                            </div>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </div>
+                                <span>Défense ferme</span>
                             </div>
                         </div>
-                        <div class="about-feat reveal reveal-delay-2">
-                            <div class="about-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
+
+                    <!-- Panel 2 -->
+                    <div class="slideshow-panel" data-slide-panel="2">
+                        <div class="slideshow-panel-badge">Notre promesse</div>
+                        <p class="slideshow-panel-desc">Des tarifs justes et clairs, communiqués avant tout engagement. Pas de surprise : vous savez exactement ce que vous payez.</p>
+                        <div class="slideshow-panel-features">
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                                </div>
+                                <span>Devis détaillé</span>
                             </div>
-                            <div>
-                                <h4>Solutions amiables</h4>
-                                <p>Résolution amiable en priorité, défense solide si nécessaire.</p>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                </div>
+                                <span>Facturation claire</span>
+                            </div>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <span>Premier appel gratuit</span>
                             </div>
                         </div>
-                        <div class="about-feat reveal reveal-delay-3">
-                            <div class="about-feat-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    </div>
+
+                    <!-- Panel 3 -->
+                    <div class="slideshow-panel" data-slide-panel="3">
+                        <div class="slideshow-panel-badge">Notre force</div>
+                        <p class="slideshow-panel-desc">En droit, chaque jour compte. Nous nous engageons à répondre sous 24h et à agir avec l'urgence que votre situation exige.</p>
+                        <div class="slideshow-panel-features">
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                </div>
+                                <span>Réponse sous 24h</span>
                             </div>
-                            <div>
-                                <h4>Honoraires transparents</h4>
-                                <p>Des tarifs justes et clairs, adaptés à la complexité de votre dossier.</p>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                                </div>
+                                <span>Urgences traitées</span>
+                            </div>
+                            <div class="slideshow-feature">
+                                <div class="slideshow-feature-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                </div>
+                                <span>Suivi en temps réel</span>
                             </div>
                         </div>
                     </div>
@@ -2605,114 +2734,84 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.hero-stats, .counters-grid').forEach(el => counterObs.observe(el));
 
-    // === RADIAL ORBITAL ===
+    // === PROBLEM TABS ===
     (function() {
-        const { animate: mAnimate, inView: mInView, stagger: mStagger } = window.Motion || {};
-        if (!mAnimate) return;
+        const { animate, inView, stagger } = window.Motion || {};
+        if (!animate) return;
 
-        const wrap = document.getElementById('orbitalWrap');
-        if (!wrap) return;
+        const nav = document.getElementById('problemTabsNav');
+        const content = document.getElementById('problemTabsContent');
+        const indicator = document.getElementById('problemTabIndicator');
+        if (!nav || !content) return;
 
-        const nodes = wrap.querySelectorAll('.orbital-node');
-        const rings = wrap.querySelectorAll('.orbital-ring');
-        const lines = wrap.querySelectorAll('.orbital-line');
-        const hub = wrap.querySelector('.orbital-hub');
-        const detail = document.getElementById('orbitalDetail');
-        const detailTitle = document.getElementById('orbDetailTitle');
-        const detailText = document.getElementById('orbDetailText');
+        const buttons = nav.querySelectorAll('.problem-tab-btn');
+        const panels = content.querySelectorAll('.problem-tab-panel');
+        let currentTab = 0;
 
-        const data = [
-            { title: 'Un divorce inattendu', text: 'Garde des enfants, pension alimentaire, partage des biens. Chaque décision compte. Nous vous accompagnons pour protéger vos droits et ceux de vos enfants.' },
-            { title: 'Un licenciement brutal', text: 'Licenciement abusif, heures supplémentaires impayées, harcèlement. En droit suisse, vous avez des recours. Agissez vite, les délais sont courts.' },
-            { title: 'Un litige immobilier', text: 'Résiliation de bail, loyer abusif, travaux non conformes. Notre connaissance du marché genevois est votre meilleur atout pour défendre votre logement.' },
-            { title: 'Un courrier des autorités', text: 'Mise en demeure, contrôle fiscal, procédure administrative. Ne restez pas seul face à l\'administration. Nous déchiffrons et nous défendons.' }
-        ];
+        function moveIndicator(btn) {
+            if (!indicator) return;
+            indicator.style.left = btn.offsetLeft + 'px';
+            indicator.style.width = btn.offsetWidth + 'px';
+        }
 
-        let activeNode = null;
+        // Initialize indicator position
+        requestAnimationFrame(() => {
+            const activeBtn = nav.querySelector('.problem-tab-btn.active');
+            if (activeBtn) moveIndicator(activeBtn);
+        });
+
+        function switchTab(idx) {
+            if (idx === currentTab) return;
+
+            // Animate out current panel
+            const currentPanel = panels[currentTab];
+            animate(currentPanel, { opacity: [1, 0], y: [0, -12] }, { duration: 0.2, easing: 'ease-in' }).then(() => {
+                // Update active states
+                buttons.forEach(b => b.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+
+                buttons[idx].classList.add('active');
+                panels[idx].classList.add('active');
+                moveIndicator(buttons[idx]);
+
+                currentTab = idx;
+
+                // Animate in new panel
+                const textEl = panels[idx].querySelector('.problem-tab-text');
+                const illuEl = panels[idx].querySelector('.problem-tab-illustration');
+
+                if (textEl) {
+                    animate(textEl, { opacity: [0, 1], y: [16, 0] }, { duration: 0.45, easing: [0.16, 1, 0.3, 1] });
+                }
+                if (illuEl) {
+                    animate(illuEl, { opacity: [0, 1], y: [20, 0] }, { duration: 0.5, delay: 0.08, easing: [0.16, 1, 0.3, 1] });
+                }
+            });
+        }
+
+        buttons.forEach((btn, i) => {
+            btn.addEventListener('click', () => switchTab(i));
+        });
 
         // Entrance animation
-        mInView(wrap, () => {
-            // Rings scale in
-            mAnimate(rings, { opacity: [0, 1], scale: [0.6, 1] },
-                { duration: 0.9, delay: mStagger(0.15), easing: [0.16, 1, 0.3, 1] });
+        inView(content, () => {
+            const activePanel = panels[currentTab];
+            const textEl = activePanel.querySelector('.problem-tab-text');
+            const illuEl = activePanel.querySelector('.problem-tab-illustration');
 
-            // Lines fade in
-            mAnimate(lines, { opacity: [0, 1], scaleX: [0, 1] },
-                { duration: 0.7, delay: mStagger(0.1, { start: 0.4 }), easing: [0.16, 1, 0.3, 1] });
-
-            // Hub scales in
-            mAnimate(hub, { opacity: [0, 1], scale: [0, 1] },
-                { duration: 0.8, delay: 0.3, easing: [0.34, 1.56, 0.64, 1] });
-
-            // Nodes fly in from their directions
-            nodes.forEach((node, i) => {
-                const offsets = [
-                    { x: 0, y: -60 },
-                    { x: 60, y: 0 },
-                    { x: 0, y: 60 },
-                    { x: -60, y: 0 }
-                ];
-                mAnimate(node,
-                    { opacity: [0, 1], x: [offsets[i].x, 0], y: [offsets[i].y, 0] },
-                    { duration: 0.7, delay: 0.6 + i * 0.12, easing: [0.16, 1, 0.3, 1] }
-                );
-            });
-        }, { amount: 0.3 });
-
-        // Click interaction
-        nodes.forEach(node => {
-            node.addEventListener('click', () => {
-                const idx = +node.dataset.index;
-
-                // Toggle
-                if (activeNode === node) {
-                    node.classList.remove('active');
-                    detail.classList.remove('visible');
-                    activeNode = null;
-                    return;
-                }
-
-                // Deactivate previous
-                if (activeNode) activeNode.classList.remove('active');
-                activeNode = node;
-                node.classList.add('active');
-
-                // Populate detail
-                detailTitle.textContent = data[idx].title;
-                detailText.textContent = data[idx].text;
-
-                // Animate detail card
-                detail.classList.add('visible');
-                mAnimate(detail, { opacity: [0, 1], scale: [0.9, 1] },
-                    { duration: 0.4, easing: [0.16, 1, 0.3, 1] });
-
-                // Pulse the hub
-                mAnimate(hub.querySelector('.orbital-hub-inner'),
-                    { scale: [1, 1.15, 1] },
-                    { duration: 0.5, easing: [0.16, 1, 0.3, 1] });
-            });
-        });
-
-        // Click outside to close
-        wrap.addEventListener('click', (e) => {
-            if (!e.target.closest('.orbital-node') && !e.target.closest('.orbital-detail')) {
-                if (activeNode) {
-                    activeNode.classList.remove('active');
-                    activeNode = null;
-                    detail.classList.remove('visible');
-                }
+            if (textEl) {
+                animate(textEl, { opacity: [0, 1], y: [24, 0] }, { duration: 0.6, easing: [0.16, 1, 0.3, 1] });
             }
-        });
+            if (illuEl) {
+                animate(illuEl, { opacity: [0, 1], y: [30, 0] }, { duration: 0.7, delay: 0.15, easing: [0.16, 1, 0.3, 1] });
+            }
+        }, { amount: 0.2 });
 
-        // Slow continuous rotation of ring 2 (dashed)
-        let angle = 0;
-        const ring2 = wrap.querySelector('.orbital-ring-2');
-        function rotateRing() {
-            angle += 0.15;
-            ring2.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-            requestAnimationFrame(rotateRing);
-        }
-        rotateRing();
+        // Recalculate indicator on resize
+        window.addEventListener('resize', () => {
+            const activeBtn = nav.querySelector('.problem-tab-btn.active');
+            if (activeBtn) moveIndicator(activeBtn);
+        });
     })();
 
     // === TYPEWRITER + MOTION ANIMATIONS ===
@@ -2782,6 +2881,79 @@
             // Start typewriter after a short delay
             setTimeout(typewrite, 600);
         }, { amount: 0.4 });
+    })();
+
+    // === APPROACH SLIDESHOW ===
+    (function() {
+        const { animate, inView } = window.Motion || {};
+        if (!animate) return;
+
+        const section = document.getElementById('slideshowSection');
+        if (!section) return;
+
+        const titleBtns = section.querySelectorAll('.slideshow-title-btn');
+        const panels = section.querySelectorAll('.slideshow-panel');
+        let currentSlide = 0;
+
+        function switchSlide(idx) {
+            if (idx === currentSlide) return;
+
+            // Animate out current panel
+            const currentPanel = panels[currentSlide];
+            animate(currentPanel, { opacity: [1, 0], x: [0, -20] }, { duration: 0.25, easing: 'ease-in' }).then(() => {
+                // Update active states
+                titleBtns.forEach(b => b.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+
+                titleBtns[idx].classList.add('active');
+                panels[idx].classList.add('active');
+                currentSlide = idx;
+
+                // Animate in new panel with clip-path-like reveal
+                const newPanel = panels[idx];
+                const features = newPanel.querySelectorAll('.slideshow-feature');
+
+                animate(newPanel, { opacity: [0, 1], x: [24, 0] },
+                    { duration: 0.5, easing: [0.16, 1, 0.3, 1] });
+
+                // Stagger features
+                features.forEach((feat, i) => {
+                    animate(feat, { opacity: [0, 1], y: [12, 0] },
+                        { duration: 0.4, delay: 0.15 + i * 0.07, easing: [0.16, 1, 0.3, 1] });
+                });
+            });
+        }
+
+        titleBtns.forEach((btn, i) => {
+            btn.addEventListener('click', () => switchSlide(i));
+
+            // Subtle hover effect on text characters
+            const textSpan = btn.querySelector('.slideshow-title-text');
+            btn.addEventListener('mouseenter', () => {
+                if (!btn.classList.contains('active')) {
+                    animate(textSpan, { x: [0, 4, 0] }, { duration: 0.4, easing: [0.16, 1, 0.3, 1] });
+                }
+            });
+        });
+
+        // Entrance animation
+        inView(section, () => {
+            titleBtns.forEach((btn, i) => {
+                animate(btn, { opacity: [0, 1], x: [-20, 0] },
+                    { duration: 0.5, delay: i * 0.1, easing: [0.16, 1, 0.3, 1] });
+            });
+
+            const activePanel = panels[currentSlide];
+            const features = activePanel.querySelectorAll('.slideshow-feature');
+
+            animate(activePanel, { opacity: [0, 1], x: [30, 0] },
+                { duration: 0.6, delay: 0.2, easing: [0.16, 1, 0.3, 1] });
+
+            features.forEach((feat, i) => {
+                animate(feat, { opacity: [0, 1], y: [16, 0] },
+                    { duration: 0.4, delay: 0.4 + i * 0.08, easing: [0.16, 1, 0.3, 1] });
+            });
+        }, { amount: 0.2 });
     })();
 
     // === FAQ ACCORDION ===
